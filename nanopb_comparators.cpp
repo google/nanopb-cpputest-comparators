@@ -58,13 +58,6 @@ bool NanopbStructComparator::isEqual(const void *object1, const void *object2) {
   sFatPointer expected_encoded = prv_encode_pb_dynamic(object1, this->fields);
   sFatPointer actual_encoded = prv_encode_pb_dynamic(object2, this->fields);
 
-  // These macros provide more helpful error messages than simply returning false upon mismatch
-  LONGS_EQUAL_TEXT(expected_encoded.size, actual_encoded.size,
-                   "Encoded protobuf size did not match expectations");
-  MEMCMP_EQUAL_TEXT(expected_encoded.ptr, actual_encoded.ptr, expected_encoded.size,
-                    "Encoded protobuf data did not match expectations");
-
-  // Technically redundant since the macros above should immediately fail the test
   bool is_equal = (expected_encoded.size == actual_encoded.size) &&
                   !memcmp(expected_encoded.ptr, actual_encoded.ptr, expected_encoded.size);
 
